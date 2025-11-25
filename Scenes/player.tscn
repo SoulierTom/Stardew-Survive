@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://belbk6m2govgv"]
 
 [ext_resource type="Script" uid="uid://crkebskgwh8hr" path="res://Script/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://7j4dljdy2fuh" path="res://Assets/Animations/Character/idle.png" id="2_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://7j4dljdy2fuh" path="res://Assets/Animations/Character/WhiteBoy/idle.png" id="2_cvnsp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f60y1"]
 

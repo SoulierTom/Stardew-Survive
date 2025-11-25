@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpepjcni7w4q1"
-path="res://.godot/imported/run.png-f06079410b7f9c9a64d81d34ca5f1285.ctex"
+uid="uid://q8anu3iuhcfq"
+path="res://.godot/imported/jump.png-eedaa0e35ac53a0f31ee27eaa7e5feb4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animations/Character/run.png"
-dest_files=["res://.godot/imported/run.png-f06079410b7f9c9a64d81d34ca5f1285.ctex"]
+source_file="res://Assets/Animations/Character/WhiteBoy/jump.png"
+dest_files=["res://.godot/imported/jump.png-eedaa0e35ac53a0f31ee27eaa7e5feb4.ctex"]
 
 [params]
 
