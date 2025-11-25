@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://belbk6m2govgv"]
+
+[ext_resource type="Script" uid="uid://crkebskgwh8hr" path="res://Script/player.gd" id="1_cvnsp"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_v0iea"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f60y1"]
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_cvnsp")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+script = ExtResource("1_v0iea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CapsuleShape2D_f60y1")
