@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7enhr66kq8lf"
-path="res://.godot/imported/hurt.png-999c4fd77609d9e4dfb3354e737ea400.ctex"
+uid="uid://7j4dljdy2fuh"
+path="res://.godot/imported/idle.png-dd2fc87efad97671fd8cc147f114d919.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animations/Character/hurt.png"
-dest_files=["res://.godot/imported/hurt.png-999c4fd77609d9e4dfb3354e737ea400.ctex"]
+source_file="res://Assets/Animations/Character/WhiteBoy/idle.png"
+dest_files=["res://.godot/imported/idle.png-dd2fc87efad97671fd8cc147f114d919.ctex"]
 
 [params]
 

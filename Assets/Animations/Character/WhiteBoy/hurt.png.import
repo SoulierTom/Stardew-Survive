@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bo7be366438no"
-path="res://.godot/imported/steps.png-7412e19489e9a1a2fc66f9a6cea8b95e.ctex"
+uid="uid://b7enhr66kq8lf"
+path="res://.godot/imported/hurt.png-610538980e1861d3268c7964e48efece.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tilemap/steps.png"
-dest_files=["res://.godot/imported/steps.png-7412e19489e9a1a2fc66f9a6cea8b95e.ctex"]
+source_file="res://Assets/Animations/Character/WhiteBoy/hurt.png"
+dest_files=["res://.godot/imported/hurt.png-610538980e1861d3268c7964e48efece.ctex"]
 
 [params]
 

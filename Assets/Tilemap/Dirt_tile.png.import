@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q8anu3iuhcfq"
-path="res://.godot/imported/jump.png-165bf701cc87f1909f0051a14de72fec.ctex"
+uid="uid://b5dky0oy345hu"
+path="res://.godot/imported/Dirt_tile.png-6d7e8ac72b67f1805773bbbf67c95fb1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animations/Character/jump.png"
-dest_files=["res://.godot/imported/jump.png-165bf701cc87f1909f0051a14de72fec.ctex"]
+source_file="res://Assets/Tilemap/Dirt_tile.png"
+dest_files=["res://.godot/imported/Dirt_tile.png-6d7e8ac72b67f1805773bbbf67c95fb1.ctex"]
 
 [params]
 

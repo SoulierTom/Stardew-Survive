@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb1nbalstfq80"
-path="res://.godot/imported/death.png-ac6e06431982afab52fa851a2bc22d98.ctex"
+uid="uid://dk83avpogeh2y"
+path="res://.godot/imported/PlowedDirt_tile.png-c89b1430ec7d7d382b44d994853cbb96.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animations/Character/death.png"
-dest_files=["res://.godot/imported/death.png-ac6e06431982afab52fa851a2bc22d98.ctex"]
+source_file="res://Assets/Tilemap/PlowedDirt_tile.png"
+dest_files=["res://.godot/imported/PlowedDirt_tile.png-c89b1430ec7d7d382b44d994853cbb96.ctex"]
 
 [params]
 
