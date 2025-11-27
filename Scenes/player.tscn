@@ -1,17 +1,57 @@
-[gd_scene load_steps=4 format=3 uid="uid://belbk6m2govgv"]
+[gd_scene load_steps=9 format=3 uid="uid://belbk6m2govgv"]
 
 [ext_resource type="Script" uid="uid://crkebskgwh8hr" path="res://Script/player.gd" id="1_cvnsp"]
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://7j4dljdy2fuh" path="res://Assets/Animations/Character/WhiteBoy/idle.png" id="2_cvnsp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f60y1"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(0, 0, 80, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(80, 0, 80, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkybt"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(160, 0, 80, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(240, 0, 80, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3smsa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t5aa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgqql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkybt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3wgy")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 8.0
+}]
+
 [node name="Player" type="Node2D"]
-script = ExtResource("1_cvnsp")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-script = ExtResource("1_v0iea")
+script = ExtResource("1_cvnsp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CapsuleShape2D_f60y1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+position = Vector2(-0.99999905, -15)
+scale = Vector2(1.3625, 1.3833333)
+sprite_frames = SubResource("SpriteFrames_3smsa")
+animation = &"Idle"
+frame_progress = 0.50090283

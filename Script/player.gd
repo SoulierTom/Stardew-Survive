@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 # Paramètres de déplacement
 @export var speed: float = 200.0
@@ -11,8 +11,8 @@ extends Node2D
 func _physics_process(delta: float) -> void:
 	# Récupérer les inputs du joueur
 	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_axis("Left", "Right")
-	input_vector.y = Input.get_axis("Up", "Down")
+	input_vector.x = Input.get_axis("move_left", "move_right")
+	input_vector.y = Input.get_axis("move_up", "move_down")
 	
 	# Normaliser le vecteur pour éviter le déplacement plus rapide en diagonal
 	input_vector = input_vector.normalized()
