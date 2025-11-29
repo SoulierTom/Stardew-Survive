@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 		
 		# Animation idle
 		if animated_sprite:
-			animated_sprite.play("idle")
+			animated_sprite.play("Idle")
 	
 	# Déplacer le personnage
 	move_and_slide()

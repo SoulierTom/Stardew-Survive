@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2k2jlth2x3dv"]
+
+[ext_resource type="Texture2D" uid="uid://dk83avpogeh2y" path="res://Assets/Tilemap/PlowedDirt_tile.png" id="1_2u8yu"]
+
+[node name="Cultivable_Ground" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2u8yu")
