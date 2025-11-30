@@ -1,57 +1,38 @@
-[gd_scene load_steps=9 format=3 uid="uid://belbk6m2govgv"]
+[gd_scene load_steps=6 format=3 uid="uid://belbk6m2govgv"]
 
-[ext_resource type="Script" uid="uid://crkebskgwh8hr" path="res://Scripts/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://7j4dljdy2fuh" path="res://Assets/Animations/Character/WhiteBoy/idle.png" id="2_cvnsp"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f60y1"]
+[ext_resource type="Script" uid="uid://cfljhsx1rfxpw" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://blxw4atoovcmx" path="res://Assets/Animations/Character/Player.png" id="2_cvnsp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
 atlas = ExtResource("2_cvnsp")
-region = Rect2(0, 0, 80, 60)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
-atlas = ExtResource("2_cvnsp")
-region = Rect2(80, 0, 80, 60)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fkybt"]
-atlas = ExtResource("2_cvnsp")
-region = Rect2(160, 0, 80, 60)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
-atlas = ExtResource("2_cvnsp")
-region = Rect2(240, 0, 80, 60)
+region = Rect2(0, 0, 48, 68)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3smsa"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6t5aa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vgqql")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fkybt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x3wgy")
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 8.0
+"speed": 5.0
 }]
 
-[node name="Player" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f60y1"]
+radius = 6.0
+height = 12.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_cvnsp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CapsuleShape2D_f60y1")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-position = Vector2(-0.99999905, -15)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-5.9604645e-08, -7)
 scale = Vector2(1.3625, 1.3833333)
 sprite_frames = SubResource("SpriteFrames_3smsa")
 animation = &"Idle"
-frame_progress = 0.50090283
+autoplay = "Idle"
+frame_progress = 0.98040974
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_f60y1")

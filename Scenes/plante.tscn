@@ -3,10 +3,9 @@
 [ext_resource type="Script" uid="uid://csx7olvoq1j32" path="res://Scripts/plante.gd" id="1_fqd3a"]
 [ext_resource type="Texture2D" uid="uid://dqgbj8u78tb2u" path="res://Assets/Tilemap/Crop.png" id="2_yy0rf"]
 
-[node name="Plant" type="Node2D"]
+[node name="Plant" type="Node2D" groups=["plants"]]
 script = ExtResource("1_fqd3a")
-hframes = 7
-growth_stages = Array[int]([0, 1, 2, 3, 4, 5, 6])
+plant_tileset = ExtResource("2_yy0rf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_yy0rf")

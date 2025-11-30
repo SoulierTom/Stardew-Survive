@@ -5,10 +5,24 @@ extends CharacterBody2D
 @export var acceleration: float = 1500.0
 @export var friction: float = 1200.0
 
+# Paramètres d'attaque
+@export var attack_cooldown: float = 0.5  # Temps entre deux attaques
+@export var attack_range: float = 30.0  # Portée de l'attaque
+
 # Référence au sprite animé (optionnel)
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+# Variables d'attaque
+var can_attack: bool = true
+var attack_timer: float = 0.0
+
 func _physics_process(delta: float) -> void:
+	# Gestion du cooldown d'attaque
+	if not can_attack:
+		attack_timer -= delta
+		if attack_timer <= 0:
+			can_attack = true
+	
 	# Récupérer les inputs du joueur
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_axis("move_left", "move_right")
@@ -34,6 +48,45 @@ func _physics_process(delta: float) -> void:
 	
 	# Déplacer le personnage
 	move_and_slide()
+
+func _input(event):
+	# Attaque avec la barre d'espace ou clic gauche
+	if event.is_action_pressed("Attack"):
+		attack()
+
+func attack():
+	"""Attaque les ennemis à portée"""
+	if not can_attack:
+		return
+	
+	print("Attaque !")
+	
+	# Animation d'attaque (optionnel)
+	if animated_sprite and animated_sprite.sprite_frames.has_animation("attack"):
+		animated_sprite.play("attack")
+	
+	# Trouver tous les ennemis
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	
+	for enemy in enemies:
+		if not is_instance_valid(enemy):
+			continue
+		
+		# Vérifier la distance
+		var distance = global_position.distance_to(enemy.global_position)
+		
+		if distance <= attack_range:
+			# Ennemi à portée, le détruire
+			if enemy.has_method("take_damage"):
+				enemy.take_damage()
+			else:
+				enemy.queue_free()
+			
+			print("Ennemi détruit !")
+	
+	# Activer le cooldown
+	can_attack = false
+	attack_timer = attack_cooldown
 
 # Fonction pour gérer les animations selon la direction
 func update_animation(direction: Vector2) -> void:

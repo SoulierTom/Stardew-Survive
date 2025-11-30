@@ -4,7 +4,7 @@ extends Node2D
 @onready var cultivable: TileMapLayer = $Tilemaps/Cultivable
 @onready var timer_label: Label = $TimerLabel
 
-@export var spawn_interval: float = 3.0
+@export var spawn_interval: float = 2.0
 
 # Variable pour suivre le dernier temps de spawn
 var last_spawn_time: float = 0.0
@@ -23,23 +23,9 @@ func _process(delta):
 func spawn_initial_plants():
 	"""Spawne quelques plantes au début du niveau"""
 	if cultivable:
-		cultivable.spawn_multiple_plantes(3)
+		cultivable.spawn_multiple_plantes(4)
 
 func spawn_one_plant():
 	"""Spawne une seule plante"""
 	if cultivable:
 		cultivable.spawn_plante_on_random_cultivable()
-
-# Exemple d'utilisation avec inputs
-func _input(event):
-	# Appuyer sur ESPACE pour spawner une plante
-	if event.is_action_pressed("ui_accept"):
-		spawn_one_plant()
-	
-	if event.is_action_pressed("Collect"):
-		cultivable.clear_all_plants()
-
-# Vous pouvez aussi appeler depuis n'importe où dans le niveau
-func on_player_action():
-	"""Exemple : spawner une plante quand le joueur fait une action"""
-	spawn_one_plant()

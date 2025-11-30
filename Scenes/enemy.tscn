@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1b6nk8x0q5o4"]
+
+[ext_resource type="Script" uid="uid://44rotn3h8tgq" path="res://Scripts/enemy.gd" id="1_1f0kj"]
+[ext_resource type="Texture2D" uid="uid://7231n00657fm" path="res://Assets/Divers/sanglier.png" id="1_hghv2"]
+[ext_resource type="AudioStream" uid="uid://dxailvp0hngjw" path="res://Assets/Sounds/eat-323883.mp3" id="3_287tu"]
+[ext_resource type="AudioStream" uid="uid://dw0od1qdhr606" path="res://Assets/Sounds/pig-oink-47167.mp3" id="3_afpow"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1f0kj"]
+size = Vector2(21, 33)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_1f0kj")
+target_change_sound = ExtResource("3_afpow")
+eat_plant_sound = ExtResource("3_287tu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_hghv2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 6.5)
+shape = SubResource("RectangleShape2D_1f0kj")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_afpow")
