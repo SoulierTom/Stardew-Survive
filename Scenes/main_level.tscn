@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://ca6m0fdowfgoc"]
+[gd_scene load_steps=25 format=4 uid="uid://ca6m0fdowfgoc"]
 
 [ext_resource type="Texture2D" uid="uid://qs1t6m1va07g" path="res://Assets/Tilemap/tiles.png" id="1_ikcpc"]
 [ext_resource type="PackedScene" uid="uid://belbk6m2govgv" path="res://Scenes/player.tscn" id="1_q2fht"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://c2k2jlth2x3dv" path="res://Scenes/cultivable_ground.tscn" id="6_ha3dl"]
 [ext_resource type="Script" uid="uid://vob7078rqany" path="res://Scripts/cultivable_tilemap.gd" id="7_ha3dl"]
 [ext_resource type="Script" uid="uid://vpmek5umjuth" path="res://Scripts/timer_label.gd" id="9_ha3dl"]
-[ext_resource type="PackedScene" uid="uid://d1b6nk8x0q5o4" path="res://Scenes/enemy.tscn" id="11_2jcip"]
 [ext_resource type="Texture2D" uid="uid://c267j2uu3of14" path="res://Assets/Pour UI/Horloge.png" id="12_6l6h0"]
 [ext_resource type="Script" uid="uid://dqlvi2ucgwa5l" path="res://Scripts/score_label.gd" id="13_hd7sb"]
 [ext_resource type="Texture2D" uid="uid://bwn3x1h8b55sr" path="res://Assets/Pour UI/Carrot.png" id="13_o18aq"]
@@ -789,9 +788,6 @@ position = Vector2(534, 229)
 position = Vector2(576, 234)
 zoom = Vector2(1.75, 1.75)
 
-[node name="Enemy" parent="." instance=ExtResource("11_2jcip")]
-position = Vector2(664, 152)
-
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -811,8 +807,6 @@ offset_top = -176.0
 offset_right = 48.0
 offset_bottom = -130.0
 grow_vertical = 2
-
-[node name="SpawnTimer" type="Timer" parent="UI/Times rate"]
 
 [node name="TimerLabel" type="Label" parent="UI/Times rate"]
 layout_mode = 0
@@ -875,3 +869,24 @@ offset_top = 4.0
 offset_right = 37.0
 offset_bottom = 36.0
 texture = ExtResource("13_o18aq")
+
+[node name="Spawner" type="Node" parent="."]
+
+[node name="Spawn" type="Node2D" parent="Spawner"]
+position = Vector2(205, 210)
+
+[node name="Spawn2" type="Node2D" parent="Spawner"]
+position = Vector2(566, 469)
+
+[node name="Spawn3" type="Node2D" parent="Spawner"]
+position = Vector2(964, 335)
+
+[node name="Spawn4" type="Node2D" parent="Spawner"]
+position = Vector2(762, 27)
+
+[node name="SpawnPlanteTimer" type="Timer" parent="."]
+
+[node name="SpawnEnemyTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 3.0
+autostart = true
