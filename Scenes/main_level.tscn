@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://ca6m0fdowfgoc"]
+[gd_scene load_steps=25 format=4 uid="uid://ca6m0fdowfgoc"]
 
 [ext_resource type="Texture2D" uid="uid://qs1t6m1va07g" path="res://Assets/Tilemap/tiles.png" id="1_ikcpc"]
 [ext_resource type="PackedScene" uid="uid://belbk6m2govgv" path="res://Scenes/player.tscn" id="1_q2fht"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://vob7078rqany" path="res://Scripts/cultivable_tilemap.gd" id="7_ha3dl"]
 [ext_resource type="Script" uid="uid://vpmek5umjuth" path="res://Scripts/timer_label.gd" id="9_ha3dl"]
 [ext_resource type="PackedScene" uid="uid://d1b6nk8x0q5o4" path="res://Scenes/enemy.tscn" id="11_2jcip"]
+[ext_resource type="Texture2D" uid="uid://c267j2uu3of14" path="res://Assets/Pour UI/Horloge.png" id="12_6l6h0"]
+[ext_resource type="Texture2D" uid="uid://bwn3x1h8b55sr" path="res://Assets/Pour UI/Carrot.png" id="13_o18aq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5erdv"]
 texture = ExtResource("1_ikcpc")
@@ -736,6 +738,30 @@ scenes/1/scene = ExtResource("6_ha3dl")
 [sub_resource type="TileSet" id="TileSet_2jcip"]
 sources/0 = SubResource("TileSetScenesCollectionSource_f3gli")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6l6h0"]
+bg_color = Color(0.3966994, 0.59651005, 0.93795484, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0.8352941, 0.92156863)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hd7sb"]
+bg_color = Color(0.7921569, 0.6431373, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0.39607844, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_tqiex")
 
@@ -759,10 +785,10 @@ plante_scene = ExtResource("2_f3gli")
 position = Vector2(534, 229)
 
 [node name="TimerLabel" type="Label" parent="."]
-offset_left = 432.0
-offset_top = 146.0
-offset_right = 503.0
-offset_bottom = 169.0
+offset_left = 258.0
+offset_top = 100.0
+offset_right = 313.0
+offset_bottom = 129.0
 text = "timer"
 script = ExtResource("9_ha3dl")
 
@@ -772,3 +798,66 @@ zoom = Vector2(1.75, 1.75)
 
 [node name="Enemy" parent="." instance=ExtResource("11_2jcip")]
 position = Vector2(664, 152)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 257.0
+offset_top = 55.0
+offset_right = 888.0
+offset_bottom = 413.0
+
+[node name="Times rate" type="Panel" parent="UI"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -176.0
+offset_right = 48.0
+offset_bottom = -130.0
+grow_vertical = 2
+
+[node name="Horloge" type="Panel" parent="UI/Times rate"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -20.0
+offset_right = 45.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6l6h0")
+
+[node name="TextureRect" type="TextureRect" parent="UI/Times rate/Horloge"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 36.0
+offset_bottom = 37.0
+texture = ExtResource("12_6l6h0")
+
+[node name="Carrots" type="Panel" parent="UI"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 147.0
+offset_top = 6.0
+offset_right = 187.0
+offset_bottom = 46.0
+
+[node name="fond" type="Panel" parent="UI/Carrots"]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hd7sb")
+
+[node name="TextureRect" type="TextureRect" parent="UI/Carrots/fond"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 37.0
+offset_bottom = 36.0
+texture = ExtResource("13_o18aq")
