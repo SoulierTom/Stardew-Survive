@@ -1,7 +1,7 @@
 extends Label
 
 # Durée totale du compte à rebours (1 min 30 = 90 secondes)
-const TOTAL_TIME := 90.0
+const TOTAL_TIME := 15.0
 
 var remaining_time: float = TOTAL_TIME
 var is_running: bool = false
@@ -17,7 +17,7 @@ func _process(delta):
 		if remaining_time < 0:
 			remaining_time = 0
 			is_running = false
-		
+			on_timer_finished()
 		update_display()
 
 func start_countdown():
@@ -44,3 +44,7 @@ func update_display():
 	var milliseconds := int((remaining_time - int(remaining_time)) * 100)
 
 	text = "%02d:%02d:%02d" % [minutes, seconds, milliseconds]
+
+func on_timer_finished():
+	print("GameOver")
+	get_tree().change_scene_to_file("res://Scenes/gameover_menu.tscn")
