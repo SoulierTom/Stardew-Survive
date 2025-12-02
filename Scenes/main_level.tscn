@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://ca6m0fdowfgoc"]
+[gd_scene load_steps=26 format=4 uid="uid://ca6m0fdowfgoc"]
 
 [ext_resource type="Texture2D" uid="uid://qs1t6m1va07g" path="res://Assets/Tilemap/tiles.png" id="1_ikcpc"]
 [ext_resource type="PackedScene" uid="uid://belbk6m2govgv" path="res://Scenes/player.tscn" id="1_q2fht"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://vpmek5umjuth" path="res://Scripts/timer_label.gd" id="9_ha3dl"]
 [ext_resource type="PackedScene" uid="uid://d1b6nk8x0q5o4" path="res://Scenes/enemy.tscn" id="11_2jcip"]
 [ext_resource type="Texture2D" uid="uid://c267j2uu3of14" path="res://Assets/Pour UI/Horloge.png" id="12_6l6h0"]
+[ext_resource type="Script" uid="uid://dqlvi2ucgwa5l" path="res://Scripts/score_label.gd" id="13_hd7sb"]
 [ext_resource type="Texture2D" uid="uid://bwn3x1h8b55sr" path="res://Assets/Pour UI/Carrot.png" id="13_o18aq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5erdv"]
@@ -784,14 +785,6 @@ plante_scene = ExtResource("2_f3gli")
 [node name="Player" parent="." instance=ExtResource("1_q2fht")]
 position = Vector2(534, 229)
 
-[node name="TimerLabel" type="Label" parent="."]
-offset_left = 258.0
-offset_top = 100.0
-offset_right = 313.0
-offset_bottom = 129.0
-text = "timer"
-script = ExtResource("9_ha3dl")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 234)
 zoom = Vector2(1.75, 1.75)
@@ -819,6 +812,17 @@ offset_right = 48.0
 offset_bottom = -130.0
 grow_vertical = 2
 
+[node name="SpawnTimer" type="Timer" parent="UI/Times rate"]
+
+[node name="TimerLabel" type="Label" parent="UI/Times rate"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 42.0
+offset_right = 57.0
+offset_bottom = 71.0
+text = "timer"
+script = ExtResource("9_ha3dl")
+
 [node name="Horloge" type="Panel" parent="UI/Times rate"]
 layout_mode = 1
 anchors_preset = 4
@@ -839,22 +843,32 @@ offset_right = 36.0
 offset_bottom = 37.0
 texture = ExtResource("12_6l6h0")
 
-[node name="Carrots" type="Panel" parent="UI"]
+[node name="Score" type="Panel" parent="UI"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 147.0
-offset_top = 6.0
-offset_right = 187.0
-offset_bottom = 46.0
+offset_left = 102.0
+offset_top = 7.0
+offset_right = 142.0
+offset_bottom = 47.0
 
-[node name="fond" type="Panel" parent="UI/Carrots"]
+[node name="ScoreLabel" type="Label" parent="UI/Score"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 38.0
+offset_right = 42.0
+offset_bottom = 87.0
+text = "Score
+"
+script = ExtResource("13_hd7sb")
+
+[node name="Logo" type="Panel" parent="UI/Score"]
 layout_mode = 0
 offset_top = -1.0
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_hd7sb")
 
-[node name="TextureRect" type="TextureRect" parent="UI/Carrots/fond"]
+[node name="TextureRect" type="TextureRect" parent="UI/Score/Logo"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 4.0

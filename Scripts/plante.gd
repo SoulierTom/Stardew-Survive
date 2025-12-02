@@ -142,6 +142,8 @@ func on_fully_grown():
 	# Vous pouvez ajouter un indicateur visuel ici
 
 func harvest():
+	"Augmente le score"
+	game_manager.add_score()
 	"""Récolte la plante"""
 	destroy()
 
