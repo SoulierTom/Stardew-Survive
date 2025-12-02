@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b88bebu15bgkl"]
+[gd_scene load_steps=7 format=3 uid="uid://b88bebu15bgkl"]
 
 [ext_resource type="Script" uid="uid://bd6ihnsx7cfyq" path="res://Scenes/gameover_menu.gd" id="1_360b7"]
+[ext_resource type="Script" uid="uid://dqlvi2ucgwa5l" path="res://Scripts/score_label.gd" id="2_qw18a"]
 
 [sub_resource type="Gradient" id="Gradient_28flt"]
 offsets = PackedFloat32Array(1)
@@ -11,6 +12,9 @@ gradient = SubResource("Gradient_28flt")
 
 [sub_resource type="LabelSettings" id="LabelSettings_48xlc"]
 font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_jmoai"]
+font_size = 30
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -70,3 +74,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "QUIT
 "
+
+[node name="Score_Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 529.0
+offset_top = 278.0
+offset_right = 609.0
+offset_bottom = 320.0
+text = "Score"
+label_settings = SubResource("LabelSettings_jmoai")
+script = ExtResource("2_qw18a")
