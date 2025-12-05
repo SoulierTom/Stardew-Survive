@@ -1,5 +1,8 @@
 extends Label
 
+@onready var gameovermenu = preload("res://Scenes/gameover_menu.tscn")
+var pause_instance = null
+
 # Durée totale du compte à rebours (1 min 30 = 90 secondes)
 const TOTAL_TIME := 90.0
 
@@ -46,5 +49,9 @@ func update_display():
 	text = "%02d:%02d:%02d" % [minutes, seconds, milliseconds]
 
 func on_timer_finished():
-	print("GameOver")
-	get_tree().change_scene_to_file("res://Scenes/gameover_menu.tscn")
+	if pause_instance == null :
+		print("GameOver")
+		get_tree().paused = true
+		pause_instance = gameovermenu.instantiate()
+		pause_instance.z_index = 100
+		add_child(pause_instance)

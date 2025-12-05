@@ -47,3 +47,4 @@ func spawn_enemy():
 	var enemy = enemy_scene.instantiate()
 	enemy.position = spawn_point.position
 	add_child(enemy)
+	
