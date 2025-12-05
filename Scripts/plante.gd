@@ -70,11 +70,11 @@ func setup_sprite():
 func _process(delta):
 	# Vérifier l'interaction du joueur (seulement au stade 0)
 	if current_stage == 0:
-		if Input.is_action_just_pressed("Interact_Plant"):
+		if Input.is_action_just_pressed("Interact_Main"):
 			if is_player_nearby():
 				start_growing()
 	if current_stage == 5:
-		if Input.is_action_just_pressed("Interact_Plant"):
+		if Input.is_action_just_pressed("Interact_Main"):
 			if is_player_nearby():
 				harvest()
 	
