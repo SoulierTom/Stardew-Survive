@@ -1,0 +1,9 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cf3gft2r6wgq7"]
+
+[ext_resource type="PackedScene" uid="uid://c2k2jlth2x3dv" path="res://Scenes/cultivable_ground.tscn" id="1_mwgcq"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_f3gli"]
+scenes/1/scene = ExtResource("1_mwgcq")
+
+[resource]
+sources/0 = SubResource("TileSetScenesCollectionSource_f3gli")
