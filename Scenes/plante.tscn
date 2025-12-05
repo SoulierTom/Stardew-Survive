@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://7ify70vnbbqt"]
+[gd_scene load_steps=4 format=3 uid="uid://7ify70vnbbqt"]
 
 [ext_resource type="Script" uid="uid://csx7olvoq1j32" path="res://Scripts/plante.gd" id="1_fqd3a"]
 [ext_resource type="Texture2D" uid="uid://dqgbj8u78tb2u" path="res://Assets/Tilemap/Crop.png" id="2_yy0rf"]
+[ext_resource type="AudioStream" uid="uid://cbkv6wtc7e1s5" path="res://Assets/Sounds/420878__inspectorj__digging-ice-hammer-a.mp3" id="3_yy0rf"]
 
 [node name="Plant" type="Node2D" groups=["plants"]]
 script = ExtResource("1_fqd3a")
@@ -11,3 +12,6 @@ plant_tileset = ExtResource("2_yy0rf")
 texture = ExtResource("2_yy0rf")
 hframes = 7
 frame = 1
+
+[node name="Audio_Dig" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_yy0rf")
