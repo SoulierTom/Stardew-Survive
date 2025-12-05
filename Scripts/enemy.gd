@@ -9,63 +9,151 @@ extends CharacterBody2D
 # Distance pour considérer qu'on a atteint la plante
 @export var arrival_distance: float = 10.0
 
-# Durée de l'animation de changement de cible (en secondes)
-@export var target_change_duration: float = 0.6
+# Durée de l'animation "prepare_to_eat" (2 secondes)
+const PREPARE_DURATION: float = 2.0
 
-# Référence au sprite
-@onready var sprite: Sprite2D = $Sprite2D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+# Référence au sprite animé
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var audio_eat: AudioStreamPlayer2D = $Audio_Eat
+@onready var audio_exclam: AudioStreamPlayer2D = $Audio_Exclam
 
-# Son à jouer lors du changement de cible
-@export var target_change_sound: AudioStream
-# Son à jouer lors de la destruction d'une plante
+# Sons
 @export var eat_plant_sound: AudioStream
+@export var exclam_sound: AudioStream
 
 # Plante actuellement ciblée
 var target_plant: Node2D = null
-var previous_target: Node2D = null
 
 # État de l'ennemi
-var is_changing_target: bool = false
+enum State { RUNNING, PREPARING_TO_EAT, EATING }
+var current_state: State = State.RUNNING
 
-# Groupe des plantes (à définir dans votre scène de plante)
+# Groupe des plantes
 const PLANT_GROUP = "plants"
 
 func _ready():
-	# Optionnel : ajouter l'ennemi à un groupe pour faciliter la gestion
 	add_to_group("enemies")
+	
+	# Animation de course par défaut
+	if animated_sprite:
+		animated_sprite.play("run")
 
 func _physics_process(delta):
-	# Ne pas bouger pendant le changement de cible
-	if is_changing_target:
-		velocity = Vector2.ZERO
-		move_and_slide()
-		return
-	
-	# Si on a déjà une cible valide, la garder
-	if target_plant and is_instance_valid(target_plant):
-		# Ne rien faire, on garde la cible actuelle
-		pass
-	else:
-		# La cible est morte ou n'existe plus, en trouver une nouvelle
-		var new_target = find_nearest_plant()
-		
-		# Détecter si la cible a changé
-		if new_target != previous_target:
-			on_target_changed(new_target)
-			previous_target = new_target
-		
-		target_plant = new_target
-	
-	if target_plant:
-		move_towards_plant(delta)
-	else:
-		# Pas de plante à proximité, comportement par défaut
-		idle_behavior(delta)
+	match current_state:
+		State.RUNNING:
+			handle_running_state(delta)
+		State.PREPARING_TO_EAT:
+			handle_preparing_state(delta)
+		State.EATING:
+			handle_eating_state(delta)
 	
 	# Appliquer le mouvement
 	move_and_slide()
+
+func handle_running_state(delta):
+	"""Gère l'état de course vers une plante"""
+	# Jouer l'animation de course
+	if animated_sprite and animated_sprite.animation != "run":
+		animated_sprite.play("run")
+	
+	# Chercher ou garder la cible
+	if not target_plant or not is_instance_valid(target_plant):
+		target_plant = find_nearest_plant()
+	
+	if target_plant:
+		# Se déplacer vers la plante
+		var direction = (target_plant.global_position - global_position).normalized()
+		var distance = global_position.distance_to(target_plant.global_position)
+		
+		# Retourner le sprite selon la direction
+		if animated_sprite and direction.x != 0:
+			animated_sprite.flip_h = direction.x < 0
+		
+		# Vérifier si on est arrivé
+		if distance <= arrival_distance:
+			# Arrivé à la plante, commencer la préparation
+			start_preparing_to_eat()
+		else:
+			# Continuer à courir
+			velocity = direction * speed
+	else:
+		# Pas de plante, rester immobile
+		velocity = Vector2.ZERO
+
+func handle_preparing_state(delta):
+	"""Gère l'état de préparation avant de manger"""
+	# Ne pas bouger pendant la préparation
+	velocity = Vector2.ZERO
+
+func handle_eating_state(delta):
+	"""Gère l'état de manger"""
+	# Ne pas bouger pendant qu'on mange
+	velocity = Vector2.ZERO
+
+func start_preparing_to_eat():
+	"""Commence la phase de préparation à manger"""
+	print("Ennemi : Préparation à manger...")
+	current_state = State.PREPARING_TO_EAT
+	velocity = Vector2.ZERO
+	
+	# Jouer l'animation de préparation
+	if animated_sprite:
+		animated_sprite.play("prepare_to_eat")
+	
+	play_exclam_sound()
+	
+	# Attendre 2 secondes puis manger
+	await get_tree().create_timer(PREPARE_DURATION).timeout
+	
+	# Vérifier que la plante existe encore
+	if is_instance_valid(target_plant):
+		start_eating()
+	else:
+		# La plante a disparu, reprendre la course
+		current_state = State.RUNNING
+		target_plant = null
+
+func start_eating():
+	"""Commence à manger la plante"""
+	print("Ennemi : Mange la plante !")
+	current_state = State.EATING
+	
+	# Jouer l'animation de manger
+	if animated_sprite:
+		animated_sprite.play("eating")
+	
+	# Jouer le son
+	play_eat_sound()
+	
+	# Attendre que l'animation se termine (ou durée fixe)
+	var eating_duration = get_eating_animation_duration()
+	await get_tree().create_timer(eating_duration).timeout
+	
+	# Détruire la plante
+	if target_plant and is_instance_valid(target_plant):
+		if target_plant.has_method("destroy"):
+			target_plant.destroy()
+		else:
+			target_plant.queue_free()
+	
+	# Réinitialiser et chercher une nouvelle cible
+	target_plant = null
+	current_state = State.RUNNING
+	
+	print("Ennemi : Recherche d'une nouvelle plante...")
+
+func get_eating_animation_duration() -> float:
+	"""Retourne la durée de l'animation 'eating'"""
+	if animated_sprite and animated_sprite.sprite_frames:
+		var frames = animated_sprite.sprite_frames
+		if frames.has_animation("eating"):
+			var frame_count = frames.get_frame_count("eating")
+			var fps = frames.get_animation_speed("eating")
+			if fps > 0:
+				return frame_count / fps
+	
+	# Durée par défaut si on ne peut pas calculer
+	return 0.5
 
 func find_nearest_plant() -> Node2D:
 	"""Trouve la plante la plus proche dans la portée de détection"""
@@ -83,136 +171,25 @@ func find_nearest_plant() -> Node2D:
 		
 		var distance = global_position.distance_to(plant.global_position)
 		
-		# Vérifier si c'est dans la portée et plus proche
 		if distance < nearest_distance:
 			nearest_distance = distance
 			nearest_plant = plant
 	
 	return nearest_plant
 
-func move_towards_plant(delta):
-	"""Se déplace vers la plante ciblée"""
-	if not is_instance_valid(target_plant):
-		target_plant = null
-		return
-	
-	var direction = (target_plant.global_position - global_position).normalized()
-	var distance = global_position.distance_to(target_plant.global_position)
-	
-	# Si on est assez proche, attaquer/manger la plante
-	if distance <= arrival_distance:
-		attack_plant()
-	else:
-		# Se déplacer vers la plante
-		velocity = direction * speed
-		
-		# Optionnel : retourner le sprite selon la direction
-		if direction.x < 0:
-			sprite.flip_h = true
-		else:
-			sprite.flip_h = false
+func play_exclam_sound():
+	"""Joue le son de destruction de plante"""
+	if audio_exclam and exclam_sound:
+		audio_exclam.stream = exclam_sound
+		audio_exclam.play()
 
-func idle_behavior(delta):
-	"""Comportement quand aucune plante n'est à portée"""
-	# Option 1 : Ne rien faire
-	velocity = Vector2.ZERO
-	
-	# Option 2 : Patrouiller aléatoirement
-	# velocity = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * speed * 0.3
-
-func attack_plant():
-	"""Attaque/mange la plante"""
-	if is_instance_valid(target_plant):
-		print("Ennemi mange la plante !")
-		
-		# Jouer l'animation et le son de destruction
-		is_changing_target = true
-		play_eat_animation()
-		play_eat_sound()
-		
-		# Attendre la fin de l'animation avant de détruire
-		await get_tree().create_timer(target_change_duration).timeout
-		
-		# Notifier la plante qu'elle est détruite (elle libère sa case automatiquement)
-		if target_plant and is_instance_valid(target_plant):
-			if target_plant.has_method("destroy"):
-				target_plant.destroy()
-			else:
-				# Fallback : détruire directement
-				target_plant.queue_free()
-		
-		# Réinitialiser la cible et previous_target pour permettre une nouvelle recherche
-		target_plant = null
-		previous_target = null
-		is_changing_target = false
-		
-		# Optionnel : l'ennemi disparaît après avoir mangé
-		# queue_free()
+func play_eat_sound():
+	"""Joue le son de destruction de plante"""
+	if audio_eat and eat_plant_sound:
+		audio_eat.stream = eat_plant_sound
+		audio_eat.play()
 
 func take_damage(amount: int = 1):
 	"""L'ennemi prend des dégâts"""
 	print("Ennemi touché !")
-	queue_free()  # Pour l'instant, meurt en un coup
-
-func _on_area_entered(area):
-	"""Optionnel : détection par Area2D"""
-	if area.is_in_group(PLANT_GROUP):
-		target_plant = area.get_parent()
-
-func on_target_changed(new_target: Node2D):
-	"""Appelé quand l'ennemi change de cible"""
-	# Bloquer le mouvement pendant l'animation
-	is_changing_target = true
-	
-	if new_target == null:
-		print("Ennemi : Plus de cible")
-		await play_idle_animation()
-	
-	# Débloquer le mouvement après l'animation
-	is_changing_target = false
-
-
-func play_idle_animation():
-	"""Joue l'animation d'inactivité"""
-	if animation_player and animation_player.has_animation("idle"):
-		animation_player.play("idle")
-		await animation_player.animation_finished
-	else:
-		# Petite pause
-		await get_tree().create_timer(0.2).timeout
-
-func play_eat_sound():
-	"""Joue le son de destruction de plante"""
-	if audio_player and eat_plant_sound:
-		audio_player.stream = eat_plant_sound
-		audio_player.play()
-	elif audio_player:
-		print("Aucun son assigné pour manger la plante")
-
-func play_eat_animation():
-	"""Joue l'animation de destruction de plante"""
-	if animation_player and animation_player.has_animation("eat"):
-		animation_player.play("eat")
-	else:
-		# Animation par code : manger/mordre
-		eat_bounce_animation()
-
-func eat_bounce_animation():
-	"""Animation de morsure/manger par code"""
-	var tween = create_tween()
-	tween.set_trans(Tween.TRANS_QUAD)
-	tween.set_ease(Tween.EASE_IN_OUT)
-	
-	# Effet de "morsure" : avancer rapidement puis reculer
-	var original_pos = position
-	var bite_distance = 5
-	var direction = (target_plant.global_position - global_position).normalized()
-	
-	# Avancer vers la plante
-	tween.tween_property(self, "position", position + direction * bite_distance, target_change_duration * 0.3)
-	# Reculer
-	tween.tween_property(self, "position", original_pos, target_change_duration * 0.3)
-	
-	# Effet de scale (bouche qui s'ouvre/ferme)
-	tween.parallel().tween_property(self, "scale", Vector2(1.3, 0.8), target_change_duration * 0.3)
-	tween.tween_property(self, "scale", Vector2.ONE, target_change_duration * 0.3)
+	queue_free()

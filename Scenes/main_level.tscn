@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://ca6m0fdowfgoc"]
+[gd_scene load_steps=26 format=4 uid="uid://ca6m0fdowfgoc"]
 
 [ext_resource type="Texture2D" uid="uid://qs1t6m1va07g" path="res://Assets/Tilemap/tiles.png" id="1_ikcpc"]
 [ext_resource type="PackedScene" uid="uid://belbk6m2govgv" path="res://Scenes/player.tscn" id="1_q2fht"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://vob7078rqany" path="res://Scripts/cultivable_tilemap.gd" id="7_ha3dl"]
 [ext_resource type="Script" uid="uid://vpmek5umjuth" path="res://Scripts/timer_label.gd" id="9_ha3dl"]
 [ext_resource type="Texture2D" uid="uid://c267j2uu3of14" path="res://Assets/Pour UI/Horloge.png" id="12_6l6h0"]
+[ext_resource type="PackedScene" uid="uid://d1b6nk8x0q5o4" path="res://Scenes/enemy.tscn" id="12_hd7sb"]
 [ext_resource type="Script" uid="uid://dqlvi2ucgwa5l" path="res://Scripts/score_label.gd" id="13_hd7sb"]
 [ext_resource type="Texture2D" uid="uid://bwn3x1h8b55sr" path="res://Assets/Pour UI/Carrot.png" id="13_o18aq"]
 
@@ -890,3 +891,6 @@ position = Vector2(762, 27)
 process_callback = 0
 wait_time = 3.0
 autostart = true
+
+[node name="Enemy" parent="." instance=ExtResource("12_hd7sb")]
+position = Vector2(666, 215)
