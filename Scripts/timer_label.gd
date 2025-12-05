@@ -1,7 +1,7 @@
 extends Label
 
 # Durée totale du compte à rebours (1 min 30 = 90 secondes)
-const TOTAL_TIME := 15.0
+const TOTAL_TIME := 90.0
 
 var remaining_time: float = TOTAL_TIME
 var is_running: bool = false

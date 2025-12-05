@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var friction: float = 1200.0
 
 # Paramètres d'attaque
-@export var attack_cooldown: float = 0.5  # Temps entre deux attaques
+@export var attack_cooldown: float = 1.0  # Temps entre deux attaques
 @export var attack_range: float = 30.0  # Portée de l'attaque
 
 # Référence au sprite animé (optionnel)
@@ -51,7 +51,7 @@ func _physics_process(delta: float) -> void:
 
 func _input(event):
 	# Attaque avec la barre d'espace ou clic gauche
-	if event.is_action_pressed("Attack"):
+	if event.is_action_pressed("Interact_Main"):
 		attack()
 
 func attack():
