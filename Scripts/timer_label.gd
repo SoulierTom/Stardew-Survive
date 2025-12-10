@@ -1,11 +1,10 @@
 extends Label
 
-@export var gameovermenu = preload("res://Scenes/gameover_menu.tscn")
+@onready var gameovermenu = preload("res://Scenes/gameover_menu.tscn")
 var pause_instance = null
 
 # Durée totale du compte à rebours (1 min 30 = 90 secondes)
-const TOTAL_TIME := 2
-
+const TOTAL_TIME := 3
 var remaining_time: float = TOTAL_TIME
 var is_running: bool = false
 
@@ -42,23 +41,25 @@ func resume_countdown():
 
 func update_display():
 	"""Affiche le temps restant"""
-	@warning_ignore("integer_division")
 	var minutes := int(remaining_time) / 60
 	var seconds := int(remaining_time) % 60
 	var milliseconds := int((remaining_time - int(remaining_time)) * 100)
-
 	text = "%02d:%02d:%02d" % [minutes, seconds, milliseconds]
 
 func on_timer_finished():
-	if gameovermenu == null:
-		push_error("Game Over Scene n'est pas assignée !")
-		return
-	
-	get_tree().change_scene_to_packed(gameovermenu)
-	
-	#if pause_instance == null :
-		#print("GameOver")
-		#get_tree().paused = true
-		#pause_instance = gameovermenu.instantiate()
-		#pause_instance.z_index = 100
-		#add_child(pause_instance)
+	if pause_instance == null:
+		var mainlevel = get_tree().current_scene
+		print("GameOver")
+		get_tree().paused = true
+		pause_instance = gameovermenu.instantiate()
+		
+		# Définir z-index élevé
+		pause_instance.z_index = 100
+		pause_instance.z_as_relative = false
+		
+		# Centrer à l'écran
+		if pause_instance is Control:
+			pause_instance.set_anchors_preset(Control.PRESET_CENTER)
+			pause_instance.position = get_viewport_rect().size / 2 - pause_instance.size / 2
+		
+		mainlevel.add_child(pause_instance)
