@@ -23,7 +23,7 @@ extends Node2D
 @export var growth_interval: float = 3.0
 
 # Stade actuel
-var current_stage: int = 0
+var current_stage: int = 1
 
 # État de la plante
 var is_growing: bool = false  # Est-ce que la croissance automatique est activée ?
@@ -39,7 +39,7 @@ var player: CharacterBody2D = null
 func _ready():
 	add_to_group("plants")
 	setup_sprite()
-	set_stage(0)
+	set_stage(1)
 	find_cultivable_reference()
 	find_player()
 
@@ -71,7 +71,7 @@ func setup_sprite():
 
 func _process(delta):
 	# Vérifier l'interaction du joueur (seulement au stade 0)
-	if current_stage == 0:
+	if current_stage == 1:
 		if Input.is_action_just_pressed("Interact_Main"):
 			if is_player_nearby():
 				start_growing()
@@ -100,7 +100,7 @@ func is_player_nearby() -> bool:
 
 func start_growing():
 	"""Démarre la croissance de la plante (passage du stade 0 au 1)"""
-	if current_stage == 0:
+	if current_stage == 1:
 		print("Plante activée ! Début de la croissance...")
 		grow_next_stage()
 		is_growing = true

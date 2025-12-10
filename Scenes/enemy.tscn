@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://44rotn3h8tgq" path="res://Scripts/enemy.gd" id="1_1f0kj"]
 [ext_resource type="AudioStream" uid="uid://dxailvp0hngjw" path="res://Assets/Sounds/eat-323883.mp3" id="3_287tu"]
+[ext_resource type="AudioStream" uid="uid://btqfjwugtjbg1" path="res://Assets/Sounds/445975__breviceps__sniffing-snuffle-nose-sound.wav" id="3_0830c"]
 [ext_resource type="AudioStream" uid="uid://dw0od1qdhr606" path="res://Assets/Sounds/pig-oink-47167.mp3" id="3_afpow"]
 [ext_resource type="Texture2D" uid="uid://boxo4ov71xfem" path="res://Assets/Divers/sanglier court-Sheet.png" id="4_287tu"]
-[ext_resource type="AudioStream" uid="uid://bpcls31u4h3l8" path="res://Assets/Sounds/EXCLAMATION-–-Réalisée-avec-Microsoft-Clipchamp_1764927724114.mp3" id="5_0830c"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_287tu"]
 atlas = ExtResource("4_287tu")
@@ -95,7 +95,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_1f0kj")
 eat_plant_sound = ExtResource("3_287tu")
-exclam_sound = ExtResource("5_0830c")
+exclam_sound = ExtResource("3_0830c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_haro7")
@@ -109,4 +109,4 @@ shape = SubResource("RectangleShape2D_1f0kj")
 stream = ExtResource("3_afpow")
 
 [node name="Audio_Exclam" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_0830c")
+stream = ExtResource("3_0830c")
