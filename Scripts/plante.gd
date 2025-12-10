@@ -6,6 +6,8 @@ extends Node2D
 # Texture du tileset contenant tous les stades de la plante
 @export var plant_tileset: Texture2D
 
+@onready var audio_dig: AudioStreamPlayer2D = $Audio_Dig
+
 # Paramètres pour découper le tileset
 @export var tile_size: Vector2i = Vector2i(16, 16)
 @export var hframes: int = 6
@@ -144,6 +146,8 @@ func on_fully_grown():
 func harvest():
 	"Augmente le score"
 	game_manager.add_score()
+	"Audio d'arrachage de carrote"
+	#audio_dig.play()
 	"""Récolte la plante"""
 	destroy()
 
